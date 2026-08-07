@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "Time on X",
+  "version": "1.5.2",
+  "description": "Track active time on X, explore private analytics, and optionally join public rankings.",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "storage",
+    "idle",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://x.com/*",
+    "https://twitter.com/*",
+    "https://api.instantdb.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://api.instantdb.com wss://api.instantdb.com; img-src 'self' data: https://pbs.twimg.com"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Time on X",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/*",
+        "https://twitter.com/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

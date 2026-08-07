@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Time on X</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand-mark">X</div>
+      <div class="brand-copy">
+        <strong>Time on X</strong>
+        <span id="status"><i></i>Not tracking</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="today-card">
+        <span>Time spent on X today</span>
+        <strong id="todayTotal">0 sec</strong>
+        <div id="miniChart" class="mini-chart" aria-label="Today by hour"></div>
+        <div class="chart-labels"><span>12 AM</span><span>6 AM</span><span>12 PM</span><span>6 PM</span><span>Now</span></div>
+      </section>
+
+      <section class="secondary-stats">
+        <div><span>Last 7 days</span><strong id="weekTotal">0 sec</strong></div>
+        <div title="A visit is one uninterrupted stretch with X active and recently used."><span>Visits today</span><strong id="todaySessions">0</strong></div>
+      </section>
+
+      <button id="openDashboard" class="primary-link" type="button">Open activity dashboard <span>↗</span></button>
+      <div class="quick-links"><button id="openRankings" type="button">Rankings</button><button id="openSettings" type="button">Settings</button></div>
+      <p class="privacy-note">Visible + active X tab only · Stored on this device</p>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

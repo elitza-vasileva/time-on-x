@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Public Time on X rankings built from consented daily totals." />
+    <meta name="theme-color" content="#171522" />
+    <title>Time on X — Public rankings</title>
+    <link rel="icon" href="/assets/icon.png" />
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Attention, made visible</small></span></a>
+      <nav class="site-nav" aria-label="Main navigation"><a href="/">Overview</a><a class="is-active" href="/rankings/" aria-current="page">Rankings</a><a class="nav-cta" href="/dashboard/">My dashboard</a></nav>
+    </header>
+
+    <main class="page-main">
+      <section class="page-hero">
+        <div><p class="eyebrow">Public rankings</p><h1>Time on X,<br />side by side.</h1><p class="page-hero-copy">A consent-only leaderboard built from daily aggregates. Profiles are self-declared and exact activity times remain private.</p></div>
+        <div class="period-switcher" role="group" aria-label="Ranking period"><button class="is-active" data-period="daily" type="button">Daily</button><button data-period="weekly" type="button">Weekly</button><button data-period="monthly" type="button">Monthly</button><button data-period="yearly" type="button">Yearly</button></div>
+      </section>
+
+      <section class="metric-grid" aria-label="Community metrics">
+        <article class="metric-card is-dark"><span>Active participants</span><strong id="activeParticipants">—</strong><small id="profileCount">Loading public profiles</small></article>
+        <article class="metric-card"><span>Combined time</span><strong id="combinedTime">—</strong><small id="metricPeriod">Current UTC period</small></article>
+        <article class="metric-card"><span>Average per person</span><strong id="averageTime">—</strong><small>Among people with recorded time</small></article>
+      </section>
+
+      <section class="web-panel">
+        <div class="panel-heading"><div><p class="eyebrow">Leaderboard</p><h2>Who spent the most time?</h2><p>Click a self-declared handle to open its profile on X.</p></div><span id="periodLabel" class="period-label">Today · UTC</span></div>
+        <div class="ranking-columns" aria-hidden="true"><span>Rank</span><span>Profile</span><span>Time on X</span></div>
+        <div id="rankingList" class="ranking-list" aria-live="polite"><p class="empty-copy">Loading rankings…</p></div>
+      </section>
+
+      <section class="web-panel">
+        <div class="panel-heading"><div><p class="eyebrow">Community pattern</p><h2>Combined activity</h2><p>All published totals within the selected UTC period.</p></div></div>
+        <div id="communityChart" class="community-bars" aria-label="Combined public time chart"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="brand footer-brand" href="/"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Independent and not affiliated with X Corp.</small></span></a><div><a href="/">Overview</a><a href="/dashboard/">Dashboard</a><a href="/privacy/">Privacy</a><a href="mailto:eldevvision@gmail.com">Support</a></div><p>All handles are self-declared and not verified by X.</p></footer>
+    <script type="module" src="/assets/rankings.js"></script>
+  </body>
+</html>

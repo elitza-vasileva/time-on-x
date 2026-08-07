@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="View your synced Time on X daily totals, trends and yearly activity map." />
+    <meta name="theme-color" content="#171522" />
+    <title>Time on X — Web dashboard</title>
+    <link rel="icon" href="/assets/icon.png" />
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Attention, made visible</small></span></a>
+      <nav class="site-nav" aria-label="Main navigation"><a href="/">Overview</a><a href="/rankings/">Rankings</a><a class="nav-cta" href="/dashboard/" aria-current="page">My dashboard</a></nav>
+    </header>
+
+    <main class="page-main">
+      <section id="loadingState" class="auth-shell"><div class="auth-card"><p class="eyebrow">Web dashboard</p><h1>Preparing your view…</h1><p>Connecting securely to your synced daily totals.</p></div></section>
+
+      <section id="signedOutState" class="auth-shell" hidden>
+        <div class="auth-card">
+          <p class="eyebrow">Your synced Time on X</p><h1>Pick up your pattern anywhere.</h1><p>Use the same email you entered in the extension. We’ll send a one-time code—no password needed.</p>
+          <form id="emailForm" class="form-stack"><label><span>Email address</span><input id="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label><button type="submit">Email me a login code</button></form>
+          <form id="codeForm" class="form-stack" hidden><label><span>Six-digit login code</span><input id="code" inputmode="numeric" autocomplete="one-time-code" required placeholder="123456" /></label><button type="submit">Verify and open dashboard</button></form>
+          <p id="authMessage" class="form-message" role="status" aria-live="polite"></p>
+          <div class="auth-privacy">This website receives daily aggregate totals only. Exact visit timestamps, hourly detail and browsing activity remain inside your installed extension.</div>
+        </div>
+      </section>
+
+      <section id="dashboardState" hidden>
+        <div class="dashboard-welcome">
+          <div><p class="eyebrow">My web dashboard</p><h1>Your time,<br />in perspective.</h1><p id="dashboardContext">Daily totals synced by the Time on X extension.</p></div>
+          <div class="dashboard-account"><div class="dashboard-account-copy"><strong id="accountName">Signed in</strong><small id="accountEmail"></small></div><button id="signOut" class="signout-button" type="button">Sign out</button></div>
+        </div>
+
+        <div id="emptyDashboard" class="web-panel empty-dashboard" hidden><h2>No synced totals yet.</h2><p>Install Time on X, join the public rankings with this same email and sync once from the extension. Your daily totals will then appear here; exact sessions will remain private on your device.</p></div>
+
+        <div id="dashboardContent" hidden>
+          <section class="metric-grid dashboard-metrics" aria-label="Personal time summary">
+            <article class="metric-card is-dark"><span>Today</span><strong id="todayTotal">0 min</strong><small>UTC day</small></article>
+            <article class="metric-card"><span>This week</span><strong id="weekTotal">0 min</strong><small>Monday to today</small></article>
+            <article class="metric-card"><span>This month</span><strong id="monthTotal">0 min</strong><small>Calendar month</small></article>
+            <article class="metric-card"><span>This year</span><strong id="yearTotal">0 min</strong><small>Synced daily totals</small></article>
+          </section>
+
+          <div class="dashboard-grid">
+            <section class="web-panel">
+              <div class="panel-heading"><div><p class="eyebrow">Recent pattern</p><h2>Last 30 days</h2><p>Daily time synced from your extension.</p></div><span id="trendTotal" class="period-label">0 min total</span></div>
+              <div id="trendChart" class="trend-bars" aria-label="Personal 30-day time chart"></div>
+            </section>
+            <section class="web-panel">
+              <div class="panel-heading"><div><p class="eyebrow">Sync status</p><h2 id="profileHandle">Your account</h2><p id="lastSynced">Waiting for extension sync.</p></div></div>
+              <div class="sync-note">The web view intentionally contains less detail than your extension. Hourly bars and exact timestamps never leave the browser where they were recorded.</div>
+            </section>
+          </div>
+
+          <section class="web-panel">
+            <div class="panel-heading"><div><p class="eyebrow">The year at a glance</p><h2 id="heatmapTitle">Your activity map</h2><p>Every square is one UTC day. Darker days mean more recorded time.</p></div></div>
+            <div class="heatmap-wrap"><div id="yearHeatmap" class="year-heatmap" aria-label="Yearly activity heatmap"></div></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="brand footer-brand" href="/"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Independent and not affiliated with X Corp.</small></span></a><div><a href="/">Overview</a><a href="/rankings/">Rankings</a><a href="/privacy/">Privacy</a><a href="mailto:eldevvision@gmail.com">Support</a></div><p>Personal web analytics use synced UTC daily totals.</p></footer>
+    <script type="module" src="/assets/dashboard.js"></script>
+  </body>
+</html>

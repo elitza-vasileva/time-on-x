@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Time on X — Activity</title>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="dashboard.html" aria-label="Time on X activity">
+          <span class="brand-mark">X</span>
+          <span><strong>Time on X</strong><small>Attention, made visible</small></span>
+        </a>
+        <nav class="app-nav" aria-label="Main navigation">
+          <a class="is-active" href="dashboard.html" aria-current="page">Activity</a>
+          <a href="../leaderboard/leaderboard.html">Rankings</a>
+          <a href="../settings/settings.html">Settings</a>
+        </nav>
+        <div id="trackingStatus" class="status-pill is-paused"><span class="status-dot"></span><span>Not tracking</span></div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Your time on X</p>
+            <h1>A clearer view of your time on X.</h1>
+            <p class="hero-copy">Only active, visible, recently engaged time counts. Your visit history stays on this device.</p>
+          </div>
+          <div class="privacy-chip"><span aria-hidden="true">◇</span> Local &amp; private</div>
+        </section>
+
+        <section class="summary-grid" aria-label="Time summary">
+          <article class="metric-card metric-primary"><span>Today</span><strong id="todayTotal">0 sec</strong><small id="todayContext">Your active time on X</small></article>
+          <article class="metric-card"><span>Last 7 days</span><strong id="weekTotal">0 sec</strong><small>Rolling seven-day total</small></article>
+          <article class="metric-card"><span>30-day daily average</span><strong id="averageTotal">0 sec</strong><small>Including days with no activity</small></article>
+          <article class="metric-card"><span>All time</span><strong id="allTimeTotal">0 sec</strong><small id="sessionCount">0 visits recorded</small></article>
+        </section>
+
+        <section class="panel day-panel">
+          <div class="panel-heading day-heading">
+            <div><p class="eyebrow">Daily detail</p><h2 id="selectedDayTitle">Today</h2></div>
+            <div class="date-controls">
+              <button id="previousDay" class="icon-button" type="button" aria-label="Previous day">←</button>
+              <button id="todayButton" class="quiet-button" type="button">Today</button>
+              <input id="datePicker" type="date" aria-label="Choose a date" />
+              <button id="nextDay" class="icon-button" type="button" aria-label="Next day">→</button>
+            </div>
+          </div>
+          <div class="chart-block">
+            <div class="chart-title-row"><div><h3>Time by hour</h3><p>Minutes spent on X in each hour</p></div><strong id="selectedDayTotal">0 sec</strong></div>
+            <div id="hourlyChart" class="hourly-chart" aria-label="Hourly time bar chart"></div>
+          </div>
+          <div class="timeline-block">
+            <div class="chart-title-row"><div><h3>Activity timeline</h3><p>Purple segments show when Time on X was counting</p></div></div>
+            <div class="timeline-wrap">
+              <div id="timeline" class="timeline" aria-label="24 hour activity timeline"></div>
+              <div class="timeline-labels" aria-hidden="true"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel trend-panel">
+          <div class="panel-heading trend-heading">
+            <div><p class="eyebrow">Recent pattern</p><h2 id="trendTitle">7-day trend</h2></div>
+            <div class="trend-selector" role="group" aria-label="Trend range">
+              <button id="trend7Days" class="trend-option is-active" type="button" aria-pressed="true">7 days</button>
+              <button id="trend30Days" class="trend-option" type="button" aria-pressed="false">30 days</button>
+              <button id="trend12Weeks" class="trend-option" type="button" aria-pressed="false">12 weeks</button>
+            </div>
+          </div>
+          <div class="trend-period-row">
+            <button id="previousTrendPeriod" class="icon-button" type="button" aria-label="Previous trend period">←</button>
+            <div class="trend-period-copy"><strong id="trendRangeLabel">Current period</strong><span id="trendComparison">No change from previous period</span></div>
+            <strong id="trendTotal">0 sec</strong>
+            <button id="nextTrendPeriod" class="icon-button" type="button" aria-label="Next trend period" disabled>→</button>
+          </div>
+          <div id="dailyChart" class="daily-chart range-7" aria-label="Time trend bar chart"></div>
+        </section>
+
+        <section class="panel heatmap-panel">
+          <div class="panel-heading"><div><p class="eyebrow">The year at a glance</p><h2>Your X activity map</h2><p class="panel-subcopy">Every square is one day. Darker days mean more time spent on X.</p></div><strong id="heatmapYearTotal" class="heatmap-total">0 sec</strong></div>
+          <div class="heatmap-scroll"><div class="heatmap-layout"><div class="heatmap-weekdays" aria-hidden="true"><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span></div><div class="heatmap-canvas"><div id="heatmapMonths" class="heatmap-months" aria-hidden="true"></div><div id="heatmapGrid" class="heatmap-grid" aria-label="Daily time on X over the past 12 months"></div></div></div></div>
+          <div class="heatmap-legend"><span>Less</span><i class="heat-cell level-0"></i><i class="heat-cell level-1"></i><i class="heat-cell level-2"></i><i class="heat-cell level-3"></i><i class="heat-cell level-4"></i><span>More</span></div>
+        </section>
+
+        <section class="panel share-panel">
+          <div><p class="eyebrow">Make it shareable</p><h2>Turn your time on X into a story</h2><p>Create a polished image with your total, daily pattern, previous-period comparison, and a fun real-world comparison.</p></div>
+          <div class="share-controls">
+            <label><span>Period</span><select id="sharePeriod"><option value="today">Today</option><option value="7d">Last 7 days</option><option value="30d">Last 30 days</option><option value="custom">Custom dates</option></select></label>
+            <div id="shareCustomDates" class="share-custom-dates" hidden><label><span>From</span><input id="shareStartDate" type="date" /></label><label><span>To</span><input id="shareEndDate" type="date" /></label></div>
+            <button id="generateShareCard" class="primary-button" type="button">Generate share card</button>
+          </div>
+        </section>
+      </main>
+      <footer>Time on X never reads your feed, posts, messages, or searches. Public rankings are optional and require explicit consent.</footer>
+    </div>
+    <dialog id="shareDialog" class="share-dialog" aria-labelledby="shareDialogTitle">
+      <div class="share-dialog-heading"><div><p class="eyebrow">Ready to share</p><h2 id="shareDialogTitle">Your Time on X card</h2></div><button id="closeShareDialog" class="icon-button" type="button" aria-label="Close share card">×</button></div>
+      <canvas id="shareCanvas" width="1200" height="675" aria-label="Generated Time on X share card"></canvas>
+      <p class="share-note">Sharing through X opens a prepared post. If direct image sharing is unavailable, the PNG downloads so you can attach it.</p>
+      <div class="share-dialog-actions"><button id="downloadShareCard" class="quiet-button" type="button">Download PNG</button><button id="shareCardOnX" class="primary-button" type="button">Share on X</button></div>
+    </dialog>
+    <div id="chartTooltip" class="chart-tooltip" role="tooltip"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="dashboard.js"></script>
+  </body>
+</html>

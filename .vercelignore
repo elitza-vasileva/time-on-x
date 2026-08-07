@@ -1,0 +1,6 @@
+dist
+web-dist
+node_modules
+.env
+.env.*
+server/.dev.vars

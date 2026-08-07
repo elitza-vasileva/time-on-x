@@ -1,0 +1,9 @@
+name = "time-on-x-profile"
+main = "profile-worker.js"
+compatibility_date = "2026-07-22"
+
+[vars]
+# Comma-separated exact origins. Include the installed extension origin and
+# localhost only while testing, for example:
+# ALLOWED_ORIGINS = "chrome-extension://YOUR_EXTENSION_ID,http://127.0.0.1:8765"
+ALLOWED_ORIGINS = "chrome-extension://YOUR_EXTENSION_ID"

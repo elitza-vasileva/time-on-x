@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="See how much active time you spend on X with private analytics and optional public rankings." />
+    <meta name="theme-color" content="#171522" />
+    <title>Time on X — Attention, made visible</title>
+    <link rel="icon" href="/assets/icon.png" />
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Time on X home"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Attention, made visible</small></span></a>
+      <nav class="site-nav" aria-label="Main navigation"><a href="#how-it-works">How it works</a><a href="/rankings/">Rankings</a><a class="nav-cta" href="/dashboard/">My dashboard</a></nav>
+    </header>
+
+    <main>
+      <section class="landing-hero">
+        <div class="hero-copy-block">
+          <span class="signal-pill"><i></i> Privacy-first Chrome extension</span>
+          <p class="eyebrow">Your attention has a shape</p>
+          <h1>See where your<br /><em>time on X</em> goes.</h1>
+          <p class="hero-lede">Time on X counts only active, visible time—then turns it into clear daily patterns, private insights, and optional community rankings.</p>
+          <div class="hero-actions"><a class="button button-primary" href="/dashboard/">Open web dashboard <span>↗</span></a><a class="button button-secondary" href="/rankings/">Explore rankings</a></div>
+          <p class="microcopy">Exact activity stays on your device. Only daily totals sync when you explicitly choose to participate.</p>
+        </div>
+
+        <div class="hero-visual" aria-label="Example Time on X activity dashboard">
+          <div class="visual-glow"></div>
+          <article class="demo-card demo-main">
+            <div class="demo-heading"><div><span>Time spent on X today</span><strong>1 hr 42 min</strong></div><span class="demo-live"><i></i> Active</span></div>
+            <div class="demo-chart" aria-hidden="true">
+              <div style="--h:18%"><b>12m</b><i></i><span><small>Mon</small>27</span></div>
+              <div style="--h:54%"><b>38m</b><i></i><span><small>Tue</small>28</span></div>
+              <div style="--h:34%"><b>24m</b><i></i><span><small>Wed</small>29</span></div>
+              <div style="--h:72%"><b>51m</b><i></i><span><small>Thu</small>30</span></div>
+              <div style="--h:44%"><b>31m</b><i></i><span><small>Fri</small>31</span></div>
+              <div style="--h:86%"><b>61m</b><i></i><span><small>Sat</small>1</span></div>
+              <div class="is-today" style="--h:61%"><b>42m</b><i></i><span><small>Sun</small>2</span></div>
+            </div>
+          </article>
+          <article class="demo-card demo-stat"><span>Last 7 days</span><strong>4 hr 19 min</strong><small>↓ 12% from last week</small></article>
+          <article class="demo-card demo-privacy"><span class="lock-mark">⌁</span><div><strong>Private by default</strong><small>Raw sessions never leave your browser</small></div></article>
+        </div>
+      </section>
+
+      <section class="live-strip" aria-label="Live community summary">
+        <div><span id="liveParticipants">—</span><small>people on the board</small></div><div><span id="liveTime">—</span><small>combined today</small></div><div><span id="liveAverage">—</span><small>average today</small></div><p id="liveStatus">Connecting to the public board…</p>
+      </section>
+
+      <section id="how-it-works" class="section-shell story-section">
+        <div class="section-intro"><p class="eyebrow">Built to tell the truth</p><h2>Open is not the same as active.</h2><p>A forgotten tab should not count. Time on X checks the tab, window, screen and your recent interaction before adding another second.</p></div>
+        <div class="feature-grid">
+          <article><span class="feature-number">01</span><h3>Active tab only</h3><p>Tracking stops when you switch tabs, minimize Chrome, change apps or lock your computer.</p></article>
+          <article><span class="feature-number">02</span><h3>Recent interaction</h3><p>No mouse, keyboard, touch or scrolling for your chosen timeout? The timer pauses automatically.</p></article>
+          <article><span class="feature-number">03</span><h3>Your data, your choice</h3><p>Exact sessions stay local. Joining the public rankings is separate, optional and reversible.</p></article>
+        </div>
+      </section>
+
+      <section class="section-shell rankings-preview-section">
+        <div class="section-intro row-intro"><div><p class="eyebrow">Live public board</p><h2>How does today compare?</h2></div><a class="text-link" href="/rankings/">View full rankings →</a></div>
+        <div class="preview-board">
+          <div class="preview-board-head"><span>Rank</span><span>Self-declared profile</span><span>Time today</span></div>
+          <div id="landingLeaderboard" class="preview-rows" aria-live="polite"><p class="empty-copy">Loading today’s rankings…</p></div>
+        </div>
+      </section>
+
+      <section class="section-shell web-dashboard-callout">
+        <div><p class="eyebrow">Now on the web</p><h2>Your synced pattern,<br />wherever you are.</h2><p>Sign in with the same email used for public rankings to see daily totals, a 30-day trend and your yearly activity map.</p><a class="button button-light" href="/dashboard/">Go to my dashboard <span>↗</span></a></div>
+        <div class="mini-heatmap" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="brand footer-brand" href="/"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Independent and not affiliated with X Corp.</small></span></a><div><a href="/rankings/">Rankings</a><a href="/dashboard/">Dashboard</a><a href="/privacy/">Privacy</a><a href="mailto:eldevvision@gmail.com">Support</a></div><p>Daily leaderboard boundaries use UTC.</p></footer>
+    <script type="module" src="/assets/landing.js"></script>
+  </body>
+</html>

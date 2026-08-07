@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Time on X — Settings</title>
+    <link rel="stylesheet" href="../dashboard/dashboard.css" />
+    <link rel="stylesheet" href="settings.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="../dashboard/dashboard.html" aria-label="Time on X activity"><span class="brand-mark">X</span><span><strong>Time on X</strong><small>Attention, made visible</small></span></a>
+        <nav class="app-nav" aria-label="Main navigation"><a href="../dashboard/dashboard.html">Activity</a><a href="../leaderboard/leaderboard.html">Rankings</a><a class="is-active" href="settings.html" aria-current="page">Settings</a></nav>
+        <span class="page-chip">Preferences</span>
+      </header>
+      <main>
+        <section class="settings-hero"><p class="eyebrow">Settings</p><h1>Make Time on X yours.</h1><p class="hero-copy">Control how tracking pauses, how the extension looks, and what happens to your local history.</p></section>
+
+        <div class="settings-grid">
+          <section class="panel setting-card">
+            <div class="setting-icon" aria-hidden="true">⌁</div>
+            <div><p class="eyebrow">Tracking</p><h2>Inactivity timeout</h2><p>Stop counting after no mouse, keyboard, touch, or scroll activity on X for:</p></div>
+            <label class="field"><span>Timeout</span><select id="idleTimeout"><option value="30">30 seconds</option><option value="60">1 minute</option><option value="120">2 minutes</option><option value="300">5 minutes</option></select></label>
+            <p class="setting-note">Switching tabs, minimizing Chrome, or locking your computer always stops tracking immediately.</p>
+          </section>
+
+          <section class="panel setting-card">
+            <div class="setting-icon" aria-hidden="true">◐</div>
+            <div><p class="eyebrow">Appearance</p><h2>Theme</h2><p>Use your device preference or choose a permanent look.</p></div>
+            <div class="theme-options" role="radiogroup" aria-label="Theme">
+              <button type="button" role="radio" data-theme-choice="system"><strong>System</strong><span>Match your device</span></button>
+              <button type="button" role="radio" data-theme-choice="light"><strong>Light</strong><span>Always bright</span></button>
+              <button type="button" role="radio" data-theme-choice="dark"><strong>Dark</strong><span>Easy on the eyes</span></button>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel data-settings">
+          <div><p class="eyebrow">Your data</p><h2>Portable and under your control</h2><p>Export a backup or CSV at any time. Restoring a backup replaces the current visit history.</p></div>
+          <div class="data-actions"><button id="exportCsv" class="quiet-button" type="button">Export CSV</button><button id="exportJson" class="quiet-button" type="button">Backup JSON</button><label class="quiet-button file-button">Restore JSON<input id="importJson" type="file" accept="application/json,.json" /></label><button id="clearData" class="danger-button" type="button">Clear all data</button></div>
+        </section>
+      </main>
+      <footer>Settings and exact visit history are stored only on this device.</footer>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="settings.js"></script>
+  </body>
+</html>

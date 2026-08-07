@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Privacy policy for the Time on X Chrome extension and website." />
+    <meta name="theme-color" content="#171522" />
+    <title>Time on X &mdash; Privacy policy</title>
+    <link rel="icon" href="/assets/icon.png" />
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Time on X home"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Attention, made visible</small></span></a>
+      <nav class="site-nav" aria-label="Main navigation"><a href="/">Overview</a><a href="/rankings/">Rankings</a><a class="nav-cta" href="/dashboard/">My dashboard</a></nav>
+    </header>
+
+    <main class="page-main legal-main">
+      <section class="page-hero legal-hero">
+        <div><p class="eyebrow">Your data</p><h1>Privacy policy</h1><p class="page-hero-copy">Effective July 22, 2026. Last updated August 7, 2026.</p></div>
+      </section>
+
+      <article class="web-panel legal-panel">
+        <p>Time on X measures active time spent on X and provides private analytics. A user may separately choose to publish limited profile information and daily time totals on the Time on X public leaderboard. Participation is optional and requires affirmative consent inside the extension.</p>
+
+        <h2>Information handled locally</h2>
+        <p>Time on X stores these items on the user&rsquo;s device:</p>
+        <ul>
+          <li>Start and end timestamps for active, visible visits on <code>x.com</code> and <code>twitter.com</code>.</li>
+          <li>The selected inactivity timeout and theme.</li>
+          <li>Local extension and authentication state needed to operate requested features.</li>
+        </ul>
+        <p>Temporary mouse, keyboard, scroll, wheel, touch, focus and visibility signals are used only to determine whether a visit is active. Time on X does not record event content, pressed keys, pointer coordinates, feed content, posts, direct messages, searches, page titles, passwords or browsing activity outside X.</p>
+
+        <h2>Optional public leaderboard data</h2>
+        <p>When a user signs in, enters an X handle and accepts the leaderboard consent, Time on X sends the following data to the cloud:</p>
+        <ul>
+          <li>The email address used for private magic-code authentication and an InstantDB account identifier.</li>
+          <li>The entered X handle and its lowercase lookup form.</li>
+          <li>The public X display name, X account ID and profile-image URL when optional profile enrichment succeeds.</li>
+          <li>One aggregate duration for each synced UTC calendar day.</li>
+          <li>Consent-policy version and consent, update and sync timestamps.</li>
+        </ul>
+        <p>The email address and authentication identifier are not returned in public leaderboard queries. The X handle, public display name and image, X profile link and daily aggregate durations are public and are used for daily, Monday&ndash;Sunday weekly, calendar-month, calendar-year and community charts. Exact visit timestamps are never uploaded.</p>
+        <p>Leaderboard totals are self-reported by the installed extension. Entering an X handle does not prove ownership of that X account.</p>
+
+        <h2>Service providers and disclosure</h2>
+        <ul>
+          <li><strong>InstantDB</strong> provides authentication, database storage, access controls and real-time leaderboard queries.</li>
+          <li><strong>Cloudflare</strong> may host the optional profile-enrichment proxy.</li>
+          <li><strong>ScrapeCreators</strong> receives an entered X handle only when optional profile enrichment is enabled and retrieves current public X profile fields.</li>
+          <li>Other Time on X users can see the public leaderboard fields described above.</li>
+        </ul>
+        <p>Time on X does not sell user data, use it for personalized advertising or provide it to data brokers. Data is used only to operate and secure the tracker, public rankings, exports, backups and user-requested sharing features.</p>
+
+        <h2>Choice, retention and deletion</h2>
+        <p>Local visit history remains until the user clears it from Settings or uninstalls the extension. <strong>Clear all data</strong> deletes local visit history but does not by itself leave the optional public leaderboard.</p>
+        <p>A participating user can choose <strong>Leave &amp; delete public data</strong> to delete their public profile and every associated daily total from InstantDB. Signing out only stops syncing on that device. A participant should leave the leaderboard before uninstalling or contact support for deletion.</p>
+        <p>Authentication records required for account operation and security may be retained by InstantDB according to the provider&rsquo;s terms. Infrastructure providers may also retain limited security and request logs under their own retention policies.</p>
+
+        <h2>Security</h2>
+        <p>Personal and sensitive data is transmitted only over HTTPS or secure WebSocket connections. InstantDB administrative credentials and any ScrapeCreators API key are kept out of the extension. Database rules limit profile and total changes to the authenticated owner, validate daily-duration limits, prevent duplicate handles, block client-side schema changes and rate-limit writes.</p>
+        <p>No internet service can guarantee absolute security. Users should report suspected issues using the contact information below.</p>
+
+        <h2>Chrome permissions</h2>
+        <ul>
+          <li><strong>Access to x.com and twitter.com:</strong> detects page visibility and recent interaction without reading page content.</li>
+          <li><strong>Access to api.instantdb.com:</strong> provides optional sign-in, consented aggregate sync, deletion and public rankings.</li>
+          <li><strong>Access to a configured profile service:</strong> sends only a handle entered by the user and receives public X name and avatar fields.</li>
+          <li><strong>Storage:</strong> saves visit timestamps and settings locally.</li>
+          <li><strong>Idle:</strong> excludes computer-idle and locked time.</li>
+          <li><strong>Alarms:</strong> closes stale visits and periodically syncs consented daily aggregates.</li>
+        </ul>
+
+        <h2>Limited use</h2>
+        <p>Time on X&rsquo;s use and transfer of information received from browser APIs complies with the Chrome Web Store User Data Policy, including the Limited Use requirements. Information is used only to provide or improve prominent user-facing features, for security, to comply with law or as otherwise permitted by that policy. It is not used for personalized advertising, creditworthiness, lending or sale to third parties.</p>
+
+        <h2>Changes and contact</h2>
+        <p>Material changes to data practices will be disclosed before new collection or sharing begins, and consent will be requested again when appropriate.</p>
+        <div class="legal-contact"><p><strong>Publisher:</strong> El Dev Vision Ltd</p><p><strong>Support and deletion requests:</strong> <a href="mailto:eldevvision@gmail.com">eldevvision@gmail.com</a></p></div>
+      </article>
+    </main>
+
+    <footer class="site-footer"><a class="brand footer-brand" href="/"><img src="/assets/icon.png" alt="" /><span><strong>Time on X</strong><small>Independent and not affiliated with X Corp.</small></span></a><div><a href="/">Overview</a><a href="/rankings/">Rankings</a><a href="mailto:eldevvision@gmail.com">Support</a></div><p>Published by El Dev Vision Ltd.</p></footer>
+  </body>
+</html>
