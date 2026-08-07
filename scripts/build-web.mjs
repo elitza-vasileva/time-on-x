@@ -7,6 +7,20 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const source = resolve(root, "web");
 const output = resolve(root, "web-dist");
 
+// Vercel builds from a clean checkout, so generate the InstantDB browser
+// runtime before bundling website entry points that import it.
+await build({
+  entryPoints: [resolve(root, "global", "instant-runtime-entry.js")],
+  bundle: true,
+  format: "esm",
+  outfile: resolve(root, "global", "instant-runtime.js"),
+  platform: "browser",
+  target: "chrome120",
+  minify: true,
+  sourcemap: false,
+  legalComments: "none",
+});
+
 await rm(output, { recursive: true, force: true });
 await mkdir(resolve(output, "assets"), { recursive: true });
 await mkdir(resolve(output, "rankings"), { recursive: true });
