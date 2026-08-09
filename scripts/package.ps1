@@ -2,8 +2,8 @@ $ErrorActionPreference = "Stop"
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $distDirectory = Join-Path $projectRoot "dist"
-$stagingDirectory = Join-Path $distDirectory "package-v1.5.2"
-$zipPath = Join-Path $distDirectory "time-on-x-extension-v1.5.2.zip"
+$stagingDirectory = Join-Path $distDirectory "package-v1.5.3"
+$zipPath = Join-Path $distDirectory "time-on-x-extension-v1.5.3.zip"
 $resolvedRoot = [System.IO.Path]::GetFullPath($projectRoot)
 $resolvedDist = [System.IO.Path]::GetFullPath($distDirectory)
 $resolvedStaging = [System.IO.Path]::GetFullPath($stagingDirectory)

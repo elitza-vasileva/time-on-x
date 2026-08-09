@@ -54,6 +54,22 @@ test("leaderboard sums selected days and ranks ties by handle", () => {
   ]);
 });
 
+test("consenting profiles remain visible before their first synced total", () => {
+  const profiles = [
+    { publicId: "a", handleLower: "ada", handle: "Ada", consentVersion: "v", public: true },
+    { publicId: "b", handleLower: "bea", handle: "Bea", consentVersion: "v", public: true },
+    { publicId: "c", handleLower: "cy", handle: "Cy", consentVersion: "v", public: false },
+  ];
+  const period = leaderboardPeriod("daily", Date.parse("2026-07-19T10:00:00Z"));
+  const result = aggregateLeaderboard(profiles, [
+    { publicId: "b", date: "2026-07-19", durationMs: 60_000 },
+  ], period, "a");
+  assert.deepEqual(result.map((row) => [row.rank, row.handle, row.durationMs]), [
+    [1, "Bea", 60_000],
+    [2, "Ada", 0],
+  ]);
+});
+
 test("X handles are normalized and validated", () => {
   assert.equal(normalizeHandle("  @OpenAI  "), "OpenAI");
   assert.equal(normalizeHandle("not-valid!"), null);

@@ -86,7 +86,6 @@ export function aggregateLeaderboard(profiles, dailyTotals, period, currentPubli
       durationMs: totalsByProfile.get(profile.publicId) || 0,
       isCurrentUser: profile.publicId === currentPublicId,
     }))
-    .filter((profile) => profile.durationMs > 0)
     .sort((left, right) =>
       right.durationMs - left.durationMs ||
       String(left.handleLower).localeCompare(String(right.handleLower)),

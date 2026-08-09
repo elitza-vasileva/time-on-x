@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Time on X",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Track active time on X, explore private analytics, and optionally join public rankings.",
   "minimum_chrome_version": "120",
   "permissions": [

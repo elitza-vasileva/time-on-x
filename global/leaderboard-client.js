@@ -77,6 +77,13 @@ export async function joinGlobalLeaderboard(profile, consentAccepted) {
   if (!handle) throw new Error("Enter a valid X handle.");
 
   const existing = await getProfileForOwner(user.id);
+  const claimedResult = await database.queryOnce({
+    profiles: { $: { where: { handleLower: handle.toLowerCase() } } },
+  });
+  const claimedProfile = claimedResult.data.profiles?.[0] || null;
+  if (claimedProfile && claimedProfile.ownerId !== user.id) {
+    throw new Error("That X handle has already been claimed on Time on X.");
+  }
   const profileId = existing?.id || id();
   const publicId = existing?.publicId || profileId;
   const now = Date.now();
@@ -143,22 +150,36 @@ export async function syncPublicTotals(sessions, now = Date.now()) {
     const localDuration = Math.round(row.durationMs);
     return (localDuration > 0 || remote) && Number(remote?.durationMs || 0) !== localDuration;
   });
-  const transactions = changedRows.flatMap((row) => {
-    const dailyTotal = database.tx.dailyTotals.lookup("key", `${profile.publicId}:${row.date}`);
-    return [
-      dailyTotal.update({
-        key: `${profile.publicId}:${row.date}`,
-        ownerId: user.id,
-        publicId: profile.publicId,
-        date: row.date,
-        durationMs: Math.max(0, Math.min(86_400_000, Math.round(row.durationMs))),
-        updatedAt: now,
-      }),
-      dailyTotal.link({ profile: profile.id }),
-    ];
-  });
-  for (let index = 0; index < transactions.length; index += 100) {
-    await database.transact(transactions.slice(index, index + 100));
+  for (const row of changedRows) {
+    const key = `${profile.publicId}:${row.date}`;
+    const payload = {
+      key,
+      ownerId: user.id,
+      publicId: profile.publicId,
+      date: row.date,
+      durationMs: Math.max(0, Math.min(86_400_000, Math.round(row.durationMs))),
+      updatedAt: now,
+    };
+    let dailyTotalId = remoteByDate.get(row.date)?.id || id();
+    const write = () => database.transact(
+      database.tx.dailyTotals[dailyTotalId]
+        .update(payload)
+        .link({ profile: profile.id }),
+    );
+
+    try {
+      await write();
+    } catch (error) {
+      const message = error?.body?.message || error?.message || "";
+      if (!/unique/i.test(message)) throw error;
+      const latestResult = await database.queryOnce({
+        dailyTotals: { $: { where: { key } } },
+      });
+      const latest = latestResult.data.dailyTotals?.[0] || null;
+      if (!latest || latest.ownerId !== user.id || latest.publicId !== profile.publicId) throw error;
+      dailyTotalId = latest.id;
+      await write();
+    }
   }
   await database.transact(database.tx.profiles[profile.id].update({ lastSyncedAt: now, updatedAt: now }));
   return { ok: true, changed: changedRows.length, syncedAt: now };
@@ -184,7 +205,8 @@ export async function leaveGlobalLeaderboard() {
 
 export function globalErrorMessage(error) {
   const message = error?.body?.message || error?.message || "The leaderboard request failed.";
-  if (/unique/i.test(message)) return "That X handle has already been claimed on Time on X.";
+  if (/already been claimed/i.test(message)) return "That X handle has already been claimed on Time on X.";
+  if (/unique/i.test(message)) return "A public record changed while syncing. Please try again.";
   if (/rate.?limit/i.test(message)) return "Too many requests. Please wait a moment and try again.";
   return message;
 }

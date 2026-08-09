@@ -2,7 +2,7 @@
 
 Until Time on X is available in the Chrome Web Store, it must be loaded as an unpacked development extension.
 
-1. Download `time-on-x-extension-v1.5.2.zip` from the link supplied by the publisher.
+1. Download `time-on-x-extension-v1.5.3.zip` from the link supplied by the publisher.
 2. Extract the ZIP to a permanent folder. Do not select the ZIP itself.
 3. Open `chrome://extensions` in desktop Chrome.
 4. Turn on **Developer mode** in the top-right corner.
