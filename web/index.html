@@ -28,7 +28,7 @@
 
         <div class="hero-visual" aria-label="Example Time on X activity dashboard">
           <div class="visual-glow"></div>
-          <article class="demo-card demo-main">
+          <article class="demo-card demo-main" data-float="main">
             <div class="demo-heading"><div><span>Time spent on X today</span><strong>1 hr 42 min</strong></div><span class="demo-live"><i></i> Active</span></div>
             <div class="demo-chart" aria-hidden="true">
               <div style="--h:18%"><b>12m</b><i></i><span><small>Mon</small>27</span></div>
@@ -40,8 +40,8 @@
               <div class="is-today" style="--h:61%"><b>42m</b><i></i><span><small>Sun</small>2</span></div>
             </div>
           </article>
-          <article class="demo-card demo-stat"><span>Last 7 days</span><strong>4 hr 19 min</strong><small>↓ 12% from last week</small></article>
-          <article class="demo-card demo-privacy"><span class="lock-mark">⌁</span><div><strong>Private by default</strong><small>Raw sessions never leave your browser</small></div></article>
+          <article class="demo-card demo-stat" data-float="stat"><span>Last 7 days</span><strong>4 hr 19 min</strong><small>12% less than last week</small></article>
+          <article class="demo-card demo-privacy" data-float="privacy"><span class="lock-mark" aria-hidden="true">&#10003;</span><div><strong>Private by default</strong><small>Raw sessions never leave your browser</small></div></article>
         </div>
       </section>
 
@@ -55,24 +55,29 @@
           <article>
             <div class="feature-top"><span class="feature-number">01</span><span class="feature-kicker">Visible window</span></div>
             <div class="feature-visual feature-tabs" aria-hidden="true">
-              <svg viewBox="0 0 240 120" role="img"><rect x="12" y="12" width="216" height="96" rx="16"/><path d="M12 40h216"/><rect class="visual-accent" x="25" y="23" width="66" height="10" rx="5"/><rect x="99" y="23" width="48" height="10" rx="5"/><rect class="visual-soft" x="28" y="55" width="184" height="37" rx="10"/><circle class="status-dot" cx="193" cy="73.5" r="5"/></svg>
-              <span class="visual-chip">ACTIVE TAB</span>
+              <div class="mini-browser">
+                <div class="mini-browser-tabs"><i></i><i></i><i></i><span>Active X tab</span></div>
+                <div class="mini-browser-body"><span class="mini-x">X</span><div><b>Visible window</b><small>Counting now</small></div><em></em></div>
+              </div>
+              <span class="visual-chip"><i></i> ACTIVE TAB</span>
             </div>
             <h3>Active tab only</h3><p>Tracking stops when you switch tabs, minimize Chrome, change apps or lock your computer.</p>
           </article>
           <article>
             <div class="feature-top"><span class="feature-number">02</span><span class="feature-kicker">Recent signal</span></div>
             <div class="feature-visual feature-signal" aria-hidden="true">
-              <svg viewBox="0 0 240 120" role="img"><circle class="visual-soft" cx="120" cy="60" r="43"/><circle cx="120" cy="60" r="29"/><path class="signal-hand" d="M120 43v19l13 9"/><path class="cursor-mark" d="M70 35l16 39 7-14 14-7z"/><circle class="signal-ring" cx="70" cy="35" r="13"/></svg>
-              <span class="visual-chip">TIMER PAUSES</span>
+              <div class="signal-orbit"><span class="signal-clock"><i></i><b></b></span><em class="signal-dot dot-one"></em><em class="signal-dot dot-two"></em><em class="signal-dot dot-three"></em></div>
+              <div class="signal-cursor">&#8599;</div>
+              <span class="visual-chip">RECENT SIGNAL</span>
             </div>
             <h3>Recent interaction</h3><p>No mouse, keyboard, touch or scrolling for your chosen timeout? The timer pauses automatically.</p>
           </article>
           <article>
             <div class="feature-top"><span class="feature-number">03</span><span class="feature-kicker">Consent first</span></div>
             <div class="feature-visual feature-privacy" aria-hidden="true">
-              <svg viewBox="0 0 240 120" role="img"><path class="shield" d="M82 24l38-12 38 12v28c0 26-15 43-38 55-23-12-38-29-38-55z"/><path class="check" d="M103 58l12 12 25-27"/><rect class="visual-soft" x="165" y="30" width="53" height="25" rx="12.5"/><circle class="toggle-dot" cx="205" cy="42.5" r="8"/></svg>
-              <span class="visual-chip">YOU CHOOSE</span>
+              <div class="privacy-stack"><span class="privacy-card back"></span><span class="privacy-card middle"></span><span class="privacy-card front"><i>&#10003;</i><b>Daily totals</b><small>Share only what you choose</small></span></div>
+              <div class="privacy-toggle"><span>Public ranking</span><i></i></div>
+              <span class="visual-chip">CONSENT FIRST</span>
             </div>
             <h3>Your data, your choice</h3><p>Exact sessions stay local. Joining the public rankings is separate, optional and reversible.</p>
           </article>
@@ -89,7 +94,11 @@
 
       <section class="section-shell web-dashboard-callout">
         <div><p class="eyebrow">Now on the web</p><h2>Your synced pattern,<br />wherever you are.</h2><p>Sign in with the same email used for public rankings to see daily totals, a 30-day trend and your yearly activity map.</p><a class="button button-light" href="/dashboard/">Go to my dashboard <span>↗</span></a></div>
-        <div class="mini-heatmap" aria-hidden="true"></div>
+        <div class="mini-dashboard-preview" aria-hidden="true">
+          <div class="mini-dashboard-top"><span><small>Today</small><strong>42 min</strong></span><span><small>Last 7 days</small><strong>4 hr 19 min</strong></span></div>
+          <div class="mini-dashboard-chart"><i style="--h:32%"></i><i style="--h:68%"></i><i style="--h:45%"></i><i style="--h:84%"></i><i style="--h:57%"></i><i style="--h:92%"></i><i class="active" style="--h:61%"></i></div>
+          <div class="mini-heatmap"></div>
+        </div>
       </section>
     </main>
 

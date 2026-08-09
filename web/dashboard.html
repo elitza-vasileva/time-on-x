@@ -30,34 +30,38 @@
 
       <section id="dashboardState" hidden>
         <div class="dashboard-welcome">
-          <div><p class="eyebrow">My web dashboard</p><h1>Your time,<br />in perspective.</h1><p id="dashboardContext">Daily totals synced by the Time on X extension.</p></div>
-          <div class="dashboard-account"><div class="dashboard-account-copy"><strong id="accountName">Signed in</strong><small id="accountEmail"></small></div><button id="signOut" class="signout-button" type="button">Sign out</button></div>
+          <div><p class="eyebrow">Your time on X</p><h1>A clearer view of<br />your time on X.</h1><p id="dashboardContext">Only active, visible, recently engaged time counts. This web view uses the daily totals you chose to sync.</p></div>
+          <div class="dashboard-account"><span class="local-badge">Daily totals only</span><div class="dashboard-account-copy"><strong id="accountName">Signed in</strong><small id="accountEmail"></small></div><button id="signOut" class="signout-button" type="button">Sign out</button></div>
         </div>
 
         <div id="emptyDashboard" class="web-panel empty-dashboard" hidden><h2>No synced totals yet.</h2><p>Install Time on X, join the public rankings with this same email and sync once from the extension. Your daily totals will then appear here; exact sessions will remain private on your device.</p></div>
 
         <div id="dashboardContent" hidden>
           <section class="metric-grid dashboard-metrics" aria-label="Personal time summary">
-            <article class="metric-card is-dark"><span>Today</span><strong id="todayTotal">0 min</strong><small>UTC day</small></article>
-            <article class="metric-card"><span>This week</span><strong id="weekTotal">0 min</strong><small>Monday to today</small></article>
-            <article class="metric-card"><span>This month</span><strong id="monthTotal">0 min</strong><small>Calendar month</small></article>
-            <article class="metric-card"><span>This year</span><strong id="yearTotal">0 min</strong><small>Synced daily totals</small></article>
+            <article class="metric-card is-dark"><span>Today</span><strong id="todayTotal">0 min</strong><small>Your active time on X</small></article>
+            <article class="metric-card"><span>Last 7 days</span><strong id="weekTotal">0 min</strong><small>Rolling seven-day total</small></article>
+            <article class="metric-card"><span>30-day daily average</span><strong id="monthTotal">0 min</strong><small>Including days with no activity</small></article>
+            <article class="metric-card"><span>Synced total</span><strong id="yearTotal">0 min</strong><small>Available daily totals</small></article>
           </section>
 
-          <div class="dashboard-grid">
-            <section class="web-panel">
-              <div class="panel-heading"><div><p class="eyebrow">Recent pattern</p><h2>Last 30 days</h2><p>Daily time synced from your extension.</p></div><span id="trendTotal" class="period-label">0 min total</span></div>
-              <div id="trendChart" class="trend-bars" aria-label="Personal 30-day time chart"></div>
-            </section>
-            <section class="web-panel">
-              <div class="panel-heading"><div><p class="eyebrow">Sync status</p><h2 id="profileHandle">Your account</h2><p id="lastSynced">Waiting for extension sync.</p></div></div>
-              <div class="sync-note">The web view intentionally contains less detail than your extension. Hourly bars and exact timestamps never leave the browser where they were recorded.</div>
-            </section>
-          </div>
+          <section class="web-panel today-overview">
+            <div class="panel-heading"><div><p class="eyebrow">Daily detail</p><h2 id="todayHeading">Today</h2><p id="todayDate">Current UTC day</p></div><span id="profileHandle" class="period-label">Your account</span></div>
+            <div class="today-overview-body">
+              <div class="today-total-ring"><span><small>Today</small><strong id="todayDetailTotal">0 min</strong></span></div>
+              <div class="today-comparison"><span>Compared with your 30-day average</span><div><i id="todayComparisonBar"></i></div><strong id="todayComparison">No activity yet</strong></div>
+              <div class="private-detail-note"><i aria-hidden="true">&#10003;</i><div><strong>Hourly detail stays private</strong><span>The extension keeps exact timestamps and hourly bars on your device. The website receives one total per day.</span></div></div>
+            </div>
+          </section>
 
-          <section class="web-panel">
+          <section class="web-panel trend-panel">
+            <div class="panel-heading"><div><p class="eyebrow">Recent pattern</p><h2 id="trendHeading">7-day trend</h2><p id="trendDescription">Daily time synced from your extension.</p></div><div class="panel-actions"><span id="trendTotal" class="period-label">0 min total</span><div class="trend-switcher" role="group" aria-label="Trend range"><button class="is-active" type="button" data-trend="7">7 days</button><button type="button" data-trend="30">30 days</button><button type="button" data-trend="84">12 weeks</button></div></div></div>
+            <div id="trendChart" class="trend-bars" aria-label="Personal time trend"></div>
+          </section>
+
+          <section class="web-panel heatmap-panel">
             <div class="panel-heading"><div><p class="eyebrow">The year at a glance</p><h2 id="heatmapTitle">Your activity map</h2><p>Every square is one UTC day. Darker days mean more recorded time.</p></div></div>
             <div class="heatmap-wrap"><div id="yearHeatmap" class="year-heatmap" aria-label="Yearly activity heatmap"></div></div>
+            <div class="heatmap-footer"><span id="lastSynced">Waiting for extension sync.</span><div class="heatmap-legend" aria-label="Activity color legend"><span>Less</span><i class="level-0"></i><i class="level-1"></i><i class="level-2"></i><i class="level-3"></i><i class="level-4"></i><span>More</span></div></div>
           </section>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { aggregateLeaderboard } from "../global/periods.js";
 import { subscribeLeaderboard } from "./shared/instant.js";
 import { formatCompactDuration, periodDailySeries } from "./shared/data.js";
+import { attachTooltip } from "./shared/tooltip.js";
 
 const elements = Object.fromEntries([
   "activeParticipants", "profileCount", "combinedTime", "metricPeriod",
@@ -21,15 +22,16 @@ function renderChart(rows, period) {
   const series = periodDailySeries(rows, period);
   const maximum = Math.max(...series.map((item) => item.durationMs), 1);
   elements.communityChart.style.setProperty("--columns", String(series.length));
+  elements.communityChart.classList.toggle("is-compact", series.length <= 12);
   elements.communityChart.replaceChildren();
   series.forEach((item, index) => {
     const column = document.createElement("div"); column.className = "bar-column";
-    column.title = `${item.key} · ${formatCompactDuration(item.durationMs)} combined`;
     const wrap = document.createElement("div"); wrap.className = "bar-wrap";
     const bar = document.createElement("div"); bar.className = "bar"; bar.style.height = item.durationMs ? `${Math.max(2, item.durationMs / maximum * 100)}%` : "2px";
     if (series.length <= 12) { const value = document.createElement("span"); value.className = "bar-value"; value.textContent = formatCompactDuration(item.durationMs); bar.append(value); }
     const label = document.createElement("span"); label.className = "bar-label"; label.textContent = series.length <= 12 || index % 5 === 0 || index === series.length - 1 ? item.label : "";
     wrap.append(bar); column.append(wrap, label); elements.communityChart.append(column);
+    attachTooltip(column, { title: item.key, detail: `${formatCompactDuration(item.durationMs)} combined` });
   });
 }
 
