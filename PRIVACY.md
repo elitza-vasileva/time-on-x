@@ -2,7 +2,7 @@
 
 **Effective date:** July 22, 2026
 
-**Last updated:** August 7, 2026
+**Last updated:** August 11, 2026
 
 Time on X measures active time spent on X and provides private analytics. A user may separately choose to publish limited profile information and daily time totals on the Time on X public leaderboard. Participation is optional and requires affirmative consent inside the extension.
 
@@ -34,6 +34,7 @@ Leaderboard totals are self-reported by the installed extension. Entering an X h
 ## Service providers and disclosure
 
 - **InstantDB** provides authentication, database storage, access controls, and real-time leaderboard queries.
+- **DataFast** provides cookieless website analytics for `timeonx.com`. It may process the visited page, referrer, browser and device metadata, network-derived pseudonymous signals, and session-only identifiers. Time on X does not send extension visit history, exact X activity, leaderboard email addresses, or X handles to DataFast.
 - **Cloudflare** may host the profile-enrichment proxy.
 - **ScrapeCreators** receives the entered X handle and retrieves current public X profile fields. The ScrapeCreators API key remains a server secret and is never included in the extension.
 - Other Time on X users can see the public leaderboard fields described above.
