@@ -55,6 +55,59 @@ export function formatCompactDuration(milliseconds) {
   return `${hours} hr ${minutes} min`;
 }
 
+export function activeDayExtremes(rows, count = 30, now = Date.now()) {
+  const active = recentDailySeries(rows, count, now).filter((item) => item.durationMs > 0);
+  if (!active.length) return { highest: null, lowest: null };
+  return {
+    highest: active.reduce((best, item) => item.durationMs > best.durationMs ? item : best),
+    lowest: active.reduce((best, item) => item.durationMs < best.durationMs ? item : best),
+  };
+}
+
+export function payoutPeriodStats(dailyRows, payoutRows) {
+  const firstTrackedDate = (dailyRows || [])
+    .map((row) => row.date)
+    .filter((date) => /^\d{4}-\d{2}-\d{2}$/.test(date || ""))
+    .sort()[0] || null;
+  return (payoutRows || [])
+    .filter((payout) => /^\d{4}-\d{2}-\d{2}$/.test(payout.startDate || "")
+      && /^\d{4}-\d{2}-\d{2}$/.test(payout.endDate || "")
+      && payout.startDate < payout.endDate
+      && Number(payout.amountCents) > 0)
+    .map((payout) => {
+      const durationMs = (dailyRows || []).reduce((sum, row) => (
+        row.date >= payout.startDate && row.date < payout.endDate
+          ? sum + Math.max(0, Number(row.durationMs) || 0)
+          : sum
+      ), 0);
+      const amount = Number(payout.amountCents) / 100;
+      const hours = durationMs / 3_600_000;
+      return {
+        ...payout,
+        amount,
+        durationMs,
+        dollarsPerHour: hours ? amount / hours : null,
+        isPartial: Boolean(firstTrackedDate && payout.startDate < firstTrackedDate),
+        firstTrackedDate,
+      };
+    })
+    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+}
+
+export function pearsonCorrelation(points) {
+  if (!Array.isArray(points) || points.length < 2) return null;
+  const xs = points.map((point) => Number(point.x));
+  const ys = points.map((point) => Number(point.y));
+  if (xs.some((value) => !Number.isFinite(value)) || ys.some((value) => !Number.isFinite(value))) return null;
+  const meanX = xs.reduce((sum, value) => sum + value, 0) / xs.length;
+  const meanY = ys.reduce((sum, value) => sum + value, 0) / ys.length;
+  const numerator = xs.reduce((sum, value, index) => sum + (value - meanX) * (ys[index] - meanY), 0);
+  const squareX = xs.reduce((sum, value) => sum + (value - meanX) ** 2, 0);
+  const squareY = ys.reduce((sum, value) => sum + (value - meanY) ** 2, 0);
+  const denominator = Math.sqrt(squareX * squareY);
+  return denominator ? Math.max(-1, Math.min(1, numerator / denominator)) : null;
+}
+
 export function periodDailySeries(rows, period) {
   if (period.type === "yearly") {
     const totals = new Map();

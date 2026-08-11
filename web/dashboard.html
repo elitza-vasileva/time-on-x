@@ -25,7 +25,7 @@
           <form id="codeForm" class="form-stack" hidden><label><span>Six-digit login code</span><input id="code" inputmode="numeric" autocomplete="one-time-code" required placeholder="123456" /></label><button type="submit">Verify and open dashboard</button></form>
           <p id="authMessage" class="form-message" role="status" aria-live="polite"></p>
           <div class="auth-privacy">This website receives daily aggregate totals only. Exact visit timestamps, hourly detail and browsing activity remain inside your installed extension.</div>
-        </div>
+        </section>
       </section>
 
       <section id="dashboardState" hidden>
@@ -34,9 +34,15 @@
           <div class="dashboard-account"><span class="local-badge">Daily totals only</span><div class="dashboard-account-copy"><strong id="accountName">Signed in</strong><small id="accountEmail"></small></div><button id="signOut" class="signout-button" type="button">Sign out</button></div>
         </div>
 
-        <div id="emptyDashboard" class="web-panel empty-dashboard" hidden><h2>No synced totals yet.</h2><p>Install Time on X, join the public rankings with this same email and sync once from the extension. Your daily totals will then appear here; exact sessions will remain private on your device.</p></div>
+        <div class="dashboard-view-switcher" role="tablist" aria-label="Dashboard view">
+          <button id="overviewTabButton" class="is-active" type="button" role="tab" aria-selected="true" aria-controls="overviewView" data-dashboard-view="overview">Time overview</button>
+          <button id="payoutsTabButton" type="button" role="tab" aria-selected="false" aria-controls="payoutsView" data-dashboard-view="payouts">Payout analysis</button>
+        </div>
 
-        <div id="dashboardContent" hidden>
+        <section id="overviewView" role="tabpanel" aria-labelledby="overviewTabButton">
+          <div id="emptyDashboard" class="web-panel empty-dashboard" hidden><h2>No synced totals yet.</h2><p>Install Time on X, join the public rankings with this same email and sync once from the extension. Your daily totals will then appear here; exact sessions will remain private on your device.</p></div>
+
+          <div id="dashboardContent" hidden>
           <section class="metric-grid dashboard-metrics" aria-label="Personal time summary">
             <article class="metric-card is-dark"><span>Today</span><strong id="todayTotal">0 min</strong><small>Your active time on X</small></article>
             <article class="metric-card"><span>Last 7 days</span><strong id="weekTotal">0 min</strong><small>Rolling seven-day total</small></article>
@@ -56,6 +62,10 @@
           <section class="web-panel trend-panel">
             <div class="panel-heading"><div><p class="eyebrow">Recent pattern</p><h2 id="trendHeading">7-day trend</h2><p id="trendDescription">Daily time synced from your extension.</p></div><div class="panel-actions"><span id="trendTotal" class="period-label">0 min total</span><div class="trend-switcher" role="group" aria-label="Trend range"><button class="is-active" type="button" data-trend="7">7 days</button><button type="button" data-trend="30">30 days</button><button type="button" data-trend="84">12 weeks</button></div></div></div>
             <div id="trendChart" class="trend-bars" aria-label="Personal time trend"></div>
+            <div class="trend-extremes" aria-label="Highest and lowest active days">
+              <article><span class="extreme-icon is-high" aria-hidden="true">&#8593;</span><div><small>Highest day in this range</small><strong id="highestDayTime">&mdash;</strong><span id="highestDayDate">No activity yet</span></div></article>
+              <article><span class="extreme-icon is-low" aria-hidden="true">&#8595;</span><div><small>Lowest active day in this range</small><strong id="lowestDayTime">&mdash;</strong><span id="lowestDayDate">No activity yet</span></div></article>
+            </div>
           </section>
 
           <section class="web-panel heatmap-panel">
@@ -63,7 +73,55 @@
             <div class="heatmap-wrap"><div id="yearHeatmap" class="year-heatmap" aria-label="Yearly activity heatmap"></div></div>
             <div class="heatmap-footer"><span id="lastSynced">Waiting for extension sync.</span><div class="heatmap-legend" aria-label="Activity color legend"><span>Less</span><i class="level-0"></i><i class="level-1"></i><i class="level-2"></i><i class="level-3"></i><i class="level-4"></i><span>More</span></div></div>
           </section>
-        </div>
+          </div>
+        </section>
+
+        <section id="payoutsView" role="tabpanel" aria-labelledby="payoutsTabButton" hidden>
+          <section class="payout-heading">
+            <div><p class="eyebrow">Revenue sharing</p><h2>Does more time on X mean more payout?</h2><p>Add each X payout period manually. Time on X matches it against your synced daily totals and shows the relationship over time.</p></div>
+            <span class="private-pill">Private to your account</span>
+          </section>
+
+          <section class="metric-grid payout-metrics" aria-label="Payout summary">
+            <article class="metric-card is-dark"><span>Recorded payouts</span><strong id="payoutCount">0</strong><small>Private periods saved</small></article>
+            <article class="metric-card"><span>Total payouts</span><strong id="payoutTotal">$0.00</strong><small>Across saved periods</small></article>
+            <article class="metric-card"><span>Tracked time in periods</span><strong id="payoutTrackedTime">0 min</strong><small>Matched from daily totals</small></article>
+            <article class="metric-card"><span>Correlation</span><strong id="correlationValue">&mdash;</strong><small id="correlationLabel">Add at least two payouts</small></article>
+          </section>
+
+          <section class="payout-workspace">
+            <article class="web-panel payout-entry-panel">
+              <div class="panel-heading"><div><p class="eyebrow">Add payout</p><h2>Record a payment period</h2><p>Use the date range displayed by X. The ending date starts the next period and is not counted twice.</p></div></div>
+              <form id="payoutForm" class="payout-form">
+                <label><span>Starting date</span><input id="payoutStart" type="date" required /></label>
+                <label><span>Ending date</span><input id="payoutEnd" type="date" required /></label>
+                <label class="amount-field"><span>Payout amount</span><div><b>$</b><input id="payoutAmount" type="number" min="0.01" max="1000000" step="0.01" inputmode="decimal" required placeholder="88.72" /><em>USD</em></div></label>
+                <button type="submit">Save payout period</button>
+              </form>
+              <p id="payoutFormMessage" class="form-message" role="status" aria-live="polite"></p>
+              <p class="payout-boundary-note">Example: Jul 18&ndash;Aug 1 includes activity from Jul 18 through Jul 31. This prevents adjacent periods from overlapping.</p>
+            </article>
+
+            <article class="web-panel payout-comparison-panel">
+              <div class="panel-heading"><div><p class="eyebrow">Period comparison</p><h2>Time and payout, side by side</h2><p>Each measure uses its own scale so the pattern stays readable.</p></div><div class="payout-legend"><span><i class="time-swatch"></i>Time on X</span><span><i class="money-swatch"></i>Payout</span></div></div>
+              <div id="payoutComparisonEmpty" class="chart-empty">Add your first payout to build this chart.</div>
+              <div id="payoutComparisonChart" class="payout-comparison-chart" aria-label="Payout periods compared with tracked time" hidden></div>
+            </article>
+          </section>
+
+          <section class="web-panel correlation-panel">
+            <div class="panel-heading"><div><p class="eyebrow">Relationship</p><h2>Time-to-payout correlation</h2><p>Each dot is one payout period: time runs left to right, payout runs bottom to top.</p></div><span id="correlationBadge" class="period-label">Waiting for data</span></div>
+            <div class="correlation-layout">
+              <div id="correlationPlot" class="correlation-plot" aria-label="Scatter plot of tracked hours and payout amount"><div class="plot-y-label">Higher payout</div><div class="plot-x-label">More time on X</div></div>
+              <aside class="correlation-explainer"><strong id="correlationHeadline">Add at least two payouts</strong><p id="correlationDescription">Two fully tracked periods create an early directional signal. Three or more make the pattern more informative.</p><small>Partial periods are shown but excluded from correlation. Correlation describes association, not causation; content quality, impressions, replies and X&rsquo;s payout rules may also affect earnings.</small></aside>
+            </div>
+          </section>
+
+          <section class="web-panel payout-history-panel">
+            <div class="panel-heading"><div><p class="eyebrow">Saved periods</p><h2>Your payout history</h2><p>Amounts and date ranges remain private. Delete any entry whenever you like.</p></div></div>
+            <div id="payoutHistory" class="payout-history"><p class="chart-empty">No payouts saved yet.</p></div>
+          </section>
+        </section>
       </section>
     </main>
 

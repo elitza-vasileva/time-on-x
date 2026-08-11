@@ -31,6 +31,22 @@ const rules = {
       key: "auth.id == data.ownerId",
     },
   },
+  payouts: {
+    allow: {
+      view: "isOwner",
+      create: "isOwner && isValidPayout && rateLimit.payoutWrites.limit(auth.id)",
+      update: "isOwner && newData.ownerId == auth.id && newData.key == data.key && newData.amountCents > 0 && newData.amountCents <= 100000000 && newData.currency == 'USD' && rateLimit.payoutWrites.limit(auth.id)",
+      delete: "isOwner && rateLimit.payoutWrites.limit(auth.id)",
+    },
+    bind: {
+      isOwner: "auth.id != null && data.ownerId == auth.id",
+      isValidPayout: "data.amountCents > 0 && data.amountCents <= 100000000 && data.currency == 'USD'",
+    },
+    fields: {
+      ownerId: "auth.id == data.ownerId",
+      key: "auth.id == data.ownerId",
+    },
+  },
   $default: {
     allow: { $default: "false" },
   },
@@ -48,6 +64,12 @@ const rules = {
       limits: [
         { capacity: 1000, refill: { amount: 1000, period: "1 day" } },
         { capacity: 1000, refill: { amount: 1000, period: "1 minute" } },
+      ],
+    },
+    payoutWrites: {
+      limits: [
+        { capacity: 200, refill: { amount: 200, period: "1 day" } },
+        { capacity: 30, refill: { amount: 30, period: "1 minute" } },
       ],
     },
   },

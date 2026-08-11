@@ -13,6 +13,7 @@ The repository also includes a Vercel-ready website with a public landing page, 
 - InstantDB magic-code sign-in and explicit leaderboard consent
 - Public X handle with optional ScrapeCreators name/avatar enrichment, clickable X profiles, daily aggregate sync, and complete cloud-data deletion
 - Dedicated Activity, Rankings, and Settings pages with System, Light, and Dark themes
+- Private, manually entered payout periods with time comparison and correlation analysis on the signed-in web dashboard
 
 Exact visit timestamps always remain in `chrome.storage.local`. A participant publishes only one aggregate duration per UTC day plus the public profile fields described in [PRIVACY.md](PRIVACY.md).
 

@@ -24,6 +24,16 @@ const _schema = i.schema({
       durationMs: i.number(),
       updatedAt: i.date(),
     }),
+    payouts: i.entity({
+      key: i.string().unique().indexed(),
+      ownerId: i.string().indexed(),
+      startDate: i.string().indexed(),
+      endDate: i.string().indexed(),
+      amountCents: i.number(),
+      currency: i.string(),
+      createdAt: i.date(),
+      updatedAt: i.date(),
+    }),
   },
   links: {
     dailyProfile: {

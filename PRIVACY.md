@@ -2,7 +2,7 @@
 
 **Effective date:** July 22, 2026
 
-**Last updated:** August 11, 2026
+**Last updated:** August 12, 2026
 
 Time on X measures active time spent on X and provides private analytics. A user may separately choose to publish limited profile information and daily time totals on the Time on X public leaderboard. Participation is optional and requires affirmative consent inside the extension.
 
@@ -31,6 +31,10 @@ The email address and authentication identifier are not returned in public leade
 
 Leaderboard totals are self-reported by the installed extension. Entering an X handle does not, in the current version, prove ownership of that X account.
 
+## Private payout analysis
+
+A signed-in user may manually save an X revenue-sharing amount and its starting and ending dates. Time on X privately compares those records with the user's synced daily totals. Payout amounts, payout periods, calculated hourly rates, and correlation results are visible only to the authenticated owner and are never included in public rankings.
+
 ## Service providers and disclosure
 
 - **InstantDB** provides authentication, database storage, access controls, and real-time leaderboard queries.
@@ -46,6 +50,8 @@ Time on X does not sell user data, use it for personalized advertising, or provi
 Local visit history remains until the user clears it from Settings or uninstalls the extension. **Clear all data** deletes local visit history but does not by itself leave the optional public leaderboard.
 
 A participating user can choose **Leave & delete public data** to delete their public profile and every associated daily total from InstantDB. Signing out only stops syncing on that device; it does not remove previously published data. Uninstalling the extension removes local data but may not remove previously published leaderboard data, so a participant should leave the leaderboard before uninstalling or contact support for deletion.
+
+Private payout records remain until the owner deletes them from the web dashboard or requests deletion from support. Deleting public leaderboard data does not automatically delete private payout records.
 
 Authentication records required for account operation and security may be retained by InstantDB according to the provider's terms. Infrastructure providers may also retain limited security and request logs under their own retention policies.
 
