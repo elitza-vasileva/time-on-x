@@ -16,8 +16,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@instantdb/core": "^1.0.49",
-    "datafast": "^3.0.18"
+    "@instantdb/core": "^1.0.49"
   },
   "devDependencies": {
     "esbuild": "^0.28.1"

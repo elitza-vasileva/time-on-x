@@ -29,7 +29,6 @@ await mkdir(resolve(output, "privacy"), { recursive: true });
 
 await build({
   entryPoints: {
-    analytics: resolve(source, "shared", "analytics.js"),
     landing: resolve(source, "landing.js"),
     rankings: resolve(source, "rankings.js"),
     dashboard: resolve(source, "dashboard.js"),
