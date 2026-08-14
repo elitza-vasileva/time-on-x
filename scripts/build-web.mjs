@@ -49,6 +49,7 @@ await Promise.all([
   cp(resolve(source, "rankings.html"), resolve(output, "rankings", "index.html")),
   cp(resolve(source, "dashboard.html"), resolve(output, "dashboard", "index.html")),
   cp(resolve(source, "privacy.html"), resolve(output, "privacy", "index.html")),
+  cp(resolve(source, "og.png"), resolve(output, "og.png")),
   cp(resolve(source, "site.css"), resolve(output, "assets", "site.css")),
   cp(resolve(root, "icons", "icon-128.png"), resolve(output, "assets", "icon.png")),
 ]);
