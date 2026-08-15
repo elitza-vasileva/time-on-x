@@ -12,7 +12,7 @@
 
 1. Run `npm test` and the checks in `TESTING.md`.
 2. Run `npm run package`.
-3. Inspect `dist/time-on-x-extension-v1.5.3.zip`; never include `.env`, InstantDB admin credentials, the ScrapeCreators key, or `node_modules`.
+3. Inspect `dist/time-on-x-extension-v1.6.0.zip`; never include `.env`, InstantDB admin credentials, the ScrapeCreators key, or `node_modules`.
 4. Upload the ZIP as a draft. Google assigns the permanent extension ID before publication.
 5. If profile lookup is enabled, allow the permanent `chrome-extension://ID` origin in the Worker, re-run configuration with the final endpoint, rebuild, and replace the draft ZIP.
 

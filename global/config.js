@@ -3,9 +3,9 @@
 // Instant admin token in this file.
 export const INSTANT_APP_ID = "98a6542b-b4c9-4a76-81b0-d4bc03e95de7";
 
-// Deploy server/profile-worker.js and paste its HTTPS /profile URL here.
-// The ScrapeCreators API key belongs only in the Worker secret.
-export const PROFILE_LOOKUP_URL = "";
+// ScrapeCreators requests are proxied through the website so the API key never
+// enters the extension. Configure the key and allowed extension origin in Vercel.
+export const PROFILE_LOOKUP_URL = "https://timeonx.com/api/profile";
 
 export const CONSENT_VERSION = "2026-07-22-v2";
 

@@ -170,6 +170,7 @@ button { color: inherit; }
 .preview-row > b { font-size: 13px; }
 .preview-person { display: flex; align-items: center; gap: 11px; }
 .initial-avatar { width: 37px; height: 37px; flex: none; display: grid; place-items: center; border-radius: 50%; color: var(--accent-deep); background: var(--accent-soft); font-size: 11px; font-weight: 850; }
+img.initial-avatar { object-fit: cover; }
 .preview-person b, .preview-person small { display: block; }
 .preview-person b { font-size: 12px; }
 .preview-person small { margin-top: 3px; color: var(--muted); font-size: 10px; }

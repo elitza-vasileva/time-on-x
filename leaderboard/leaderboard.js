@@ -5,7 +5,7 @@ import { aggregateLeaderboard, communitySeries, normalizeHandle } from "../globa
 import { CONSENT_VERSION, getProfileForOwner, globalErrorMessage, isGlobalLeaderboardConfigured, joinGlobalLeaderboard, leaveGlobalLeaderboard, lookupXProfile, sendLoginCode, signInWithCode, signOutGlobal, subscribeGlobalAuth, subscribeLeaderboard } from "../global/leaderboard-client.js";
 
 const extensionApi = globalThis.chrome;
-const ids = ["activeParticipants", "combinedTime", "averageTime", "periodLabel", "participantCount", "communityChart", "leaderboardRows", "leaderboardEmpty", "participationIntro", "setupState", "signedOutState", "claimState", "joinedState", "emailForm", "email", "codeForm", "code", "claimForm", "handle", "lookupProfile", "profilePreview", "consent", "claimSignOut", "currentProfile", "syncStatus", "syncNow", "leave", "signOut", "accountMessage", "chartTooltip"];
+const ids = ["activeParticipants", "combinedTime", "averageTime", "periodLabel", "participantCount", "communityChart", "leaderboardRows", "leaderboardEmpty", "participationIntro", "setupState", "signedOutState", "claimState", "joinedState", "emailForm", "email", "codeForm", "code", "claimForm", "handle", "lookupProfile", "profilePreview", "consent", "claimSignOut", "currentProfile", "syncStatus", "refreshProfile", "syncNow", "leave", "signOut", "accountMessage", "chartTooltip"];
 const elements = Object.fromEntries(ids.map((id) => [id, document.getElementById(id)]));
 let store = createDefaultStore();
 let periodType = "daily";
@@ -129,14 +129,14 @@ function setMessage(message = "", success = false) { elements.accountMessage.tex
 
 async function previewXProfile() {
   const handle = normalizeHandle(elements.handle.value);
-  if (!handle) throw new Error("Enter a valid X handle.");
+  if (!handle) throw new Error("Enter a valid X handle or profile link.");
   setMessage("Looking up that public X profile…", true);
   elements.lookupProfile.disabled = true;
   try {
     pendingXProfile = await lookupXProfile(handle);
     renderProfile(elements.profilePreview, pendingXProfile);
     elements.profilePreview.hidden = false;
-    setMessage(pendingXProfile.profileFetched ? "Profile found. Confirm consent to join." : "Profile lookup is not configured yet; your handle and initial will be used.", true);
+    setMessage(pendingXProfile.profileFetched ? "Profile found. Confirm consent to join." : "Profile details are unavailable right now; your handle and initial will be used.", true);
     return pendingXProfile;
   } finally {
     elements.lookupProfile.disabled = false;
@@ -150,12 +150,31 @@ async function syncNow(feedback = true) {
   catch (error) { setMessage(globalErrorMessage(error)); }
 }
 
+async function refreshPublicProfile() {
+  if (!profile?.handle) return;
+  setMessage("Refreshing your public X profile…", true);
+  elements.refreshProfile.disabled = true;
+  try {
+    const refreshed = await lookupXProfile(profile.handle);
+    if (!refreshed.profileFetched) throw new Error("Profile details are unavailable right now. Please try again later.");
+    profile = await joinGlobalLeaderboard(refreshed, true);
+    renderAccount();
+    renderBoard();
+    setMessage("Your public name and avatar are up to date.", true);
+  } catch (error) {
+    setMessage(globalErrorMessage(error));
+  } finally {
+    elements.refreshProfile.disabled = false;
+  }
+}
+
 document.querySelectorAll("[data-period]").forEach((button) => button.addEventListener("click", () => { periodType = button.dataset.period; subscribeToBoard(); }));
 elements.emailForm.addEventListener("submit", async (event) => { event.preventDefault(); setMessage("Sending your login code…", true); try { pendingEmail = elements.email.value.trim(); await sendLoginCode(pendingEmail); renderAccount(); elements.code.focus(); setMessage("Code sent. Check your inbox.", true); } catch (error) { pendingEmail = ""; setMessage(globalErrorMessage(error)); } });
 elements.codeForm.addEventListener("submit", async (event) => { event.preventDefault(); setMessage("Verifying code…", true); try { await signInWithCode(pendingEmail, elements.code.value); pendingEmail = ""; elements.code.value = ""; setMessage("Signed in. Add your public handle.", true); } catch (error) { setMessage(globalErrorMessage(error)); } });
 elements.handle.addEventListener("input", () => { pendingXProfile = null; elements.profilePreview.hidden = true; });
 elements.lookupProfile.addEventListener("click", () => void previewXProfile().catch((error) => setMessage(globalErrorMessage(error))));
 elements.claimForm.addEventListener("submit", async (event) => { event.preventDefault(); setMessage("Creating your public profile…", true); try { const handle = normalizeHandle(elements.handle.value); const selectedProfile = pendingXProfile?.handle.toLowerCase() === handle?.toLowerCase() ? pendingXProfile : await previewXProfile(); profile = await joinGlobalLeaderboard(selectedProfile, elements.consent.checked); renderAccount(); renderBoard(); await syncNow(false); setMessage("You joined the public rankings.", true); } catch (error) { setMessage(globalErrorMessage(error)); } });
+elements.refreshProfile.addEventListener("click", () => void refreshPublicProfile());
 elements.syncNow.addEventListener("click", () => void syncNow(true));
 elements.leave.addEventListener("click", async () => { if (!confirm("Leave the public rankings and permanently delete your public handle and totals? Your local history will stay on this device.")) return; try { await leaveGlobalLeaderboard(); profile = null; renderAccount(); renderBoard(); setMessage("Your public profile and totals were deleted.", true); } catch (error) { setMessage(globalErrorMessage(error)); } });
 async function signOut() { try { await signOutGlobal(); user = null; profile = null; renderAccount(); renderBoard(); setMessage("Signed out on this device.", true); } catch (error) { setMessage(globalErrorMessage(error)); } }

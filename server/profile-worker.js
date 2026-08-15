@@ -1,4 +1,4 @@
-const HANDLE_PATTERN = /^[A-Za-z0-9_]{1,15}$/;
+import { normalizeHandle } from "../global/periods.js";
 
 function corsHeaders(origin, env) {
   const allowed = String(env.ALLOWED_ORIGINS || "")
@@ -22,8 +22,8 @@ function json(body, status, origin, env) {
 
 export function normalizeProfilePayload(data, fallbackHandle) {
   const legacy = data?.legacy || {};
-  const canonicalHandle = String(legacy.screen_name || fallbackHandle).replace(/^@+/, "");
-  if (!HANDLE_PATTERN.test(canonicalHandle)) return null;
+  const canonicalHandle = normalizeHandle(legacy.screen_name || fallbackHandle);
+  if (!canonicalHandle) return null;
   const avatarUrl = String(legacy.profile_image_url_https || "");
   return {
     handle: canonicalHandle,
@@ -43,15 +43,15 @@ export default {
     if (!env.SCRAPECREATORS_API_KEY) return json({ error: "Profile lookup is not configured." }, 503, origin, env);
 
     const input = await request.json().catch(() => ({}));
-    const handle = String(input.handle || "").trim().replace(/^@+/, "");
-    if (!HANDLE_PATTERN.test(handle)) return json({ error: "Enter a valid X handle." }, 400, origin, env);
+    const handle = normalizeHandle(input.handle);
+    if (!handle) return json({ error: "Enter a valid X handle or profile link." }, 400, origin, env);
 
     const cacheKey = new Request(`https://time-on-x-profile-cache.invalid/${handle.toLowerCase()}`);
     const cache = caches.default;
     const cached = await cache.match(cacheKey);
     if (cached) return new Response(cached.body, { status: cached.status, headers: { ...Object.fromEntries(cached.headers), ...cors } });
 
-    const upstream = await fetch(`https://api.scrapecreators.com/v1/twitter/profile?handle=${encodeURIComponent(handle)}`, {
+    const upstream = await fetch(`https://api.scrapecreators.com/v1/twitter/profile?handle=${encodeURIComponent(handle)}&cache_max_age=7d`, {
       headers: { "x-api-key": env.SCRAPECREATORS_API_KEY },
     });
     const data = await upstream.json().catch(() => ({}));

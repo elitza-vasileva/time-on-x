@@ -7,10 +7,18 @@ const elements = Object.fromEntries(
     .map((id) => [id, document.getElementById(id)]),
 );
 
-function renderInitials(handle) {
+function renderAvatar(item) {
+  if (/^https:\/\/pbs\.twimg\.com\//i.test(item.avatarUrl || "")) {
+    const image = document.createElement("img");
+    image.className = "initial-avatar";
+    image.src = item.avatarUrl;
+    image.alt = "";
+    image.referrerPolicy = "no-referrer";
+    return image;
+  }
   const avatar = document.createElement("span");
   avatar.className = "initial-avatar";
-  avatar.textContent = String(handle || "?").slice(0, 1).toUpperCase();
+  avatar.textContent = String(item.handle || "?").slice(0, 1).toUpperCase();
   return avatar;
 }
 
@@ -40,8 +48,8 @@ function renderLandingBoard(result) {
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     const rank = document.createElement("strong"); rank.textContent = `#${item.rank}`;
-    const person = document.createElement("span"); person.className = "preview-person"; person.append(renderInitials(item.handle));
-    const copy = document.createElement("span"); const handle = document.createElement("b"); handle.textContent = `@${item.handle}`; const note = document.createElement("small"); note.textContent = "Self-declared"; copy.append(handle, note); person.append(copy);
+    const person = document.createElement("span"); person.className = "preview-person"; person.append(renderAvatar(item));
+    const copy = document.createElement("span"); const name = document.createElement("b"); name.textContent = item.displayName || `@${item.handle}`; const note = document.createElement("small"); note.textContent = `@${item.handle} · self-declared`; copy.append(name, note); person.append(copy);
     const duration = document.createElement("b"); duration.textContent = formatCompactDuration(item.durationMs);
     link.append(rank, person, duration); elements.landingLeaderboard.append(link);
   });

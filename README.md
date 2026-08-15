@@ -56,7 +56,7 @@ npm run package
 npm run build:web
 ```
 
-`npm run package` creates `dist/time-on-x-extension-v1.5.3.zip`. The official InstantDB SDK is bundled into the package; no JavaScript is loaded from a remote server at runtime.
+`npm run package` creates `dist/time-on-x-extension-v1.6.0.zip`. The official InstantDB SDK is bundled into the package; no JavaScript is loaded from a remote server at runtime.
 
 `npm run build:web` creates the static Vercel output in `web-dist`, including the public privacy policy at `/privacy/`. Vercel uses the root `vercel.json` and needs no secret for the public InstantDB app ID. The web dashboard displays daily aggregates only; exact visits and hourly details remain local to the extension.
 

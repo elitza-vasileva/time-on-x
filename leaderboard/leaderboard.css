@@ -40,7 +40,8 @@
 .lookup-preview { background: var(--surface); }
 .lookup-preview .profile-copy strong { font-size: 12px; }
 .lookup-preview .profile-copy span { font-size: 9px; }
-.account-form .primary-button, .account-state > .primary-button, .account-state > .danger-button { width: 100%; }
+.account-form .primary-button, .account-state > .primary-button, .account-state > .quiet-button, .account-state > .danger-button { width: 100%; }
+.account-state > .quiet-button { margin-bottom: 8px; }
 .account-state > .danger-button { margin-top: 8px; }
 .community-panel { margin-bottom: 18px; }
 @media (max-width: 900px) { .rankings-hero { align-items: flex-start; flex-direction: column; } .rankings-layout { grid-template-columns: 1fr; } .community-stats { grid-template-columns: 1fr; } .period-selector { width: 100%; overflow-x: auto; } .period-selector button { flex: 1; } }

@@ -72,6 +72,13 @@ test("consenting profiles remain visible before their first synced total", () =>
 
 test("X handles are normalized and validated", () => {
   assert.equal(normalizeHandle("  @OpenAI  "), "OpenAI");
+  assert.equal(normalizeHandle("https://x.com/OpenAI"), "OpenAI");
+  assert.equal(normalizeHandle("x.com/OpenAI/"), "OpenAI");
+  assert.equal(normalizeHandle("https://twitter.com/OpenAI?ref=profile"), "OpenAI");
+  assert.equal(normalizeHandle("https://mobile.x.com/OpenAI"), "OpenAI");
+  assert.equal(normalizeHandle("https://x.com/home"), null);
+  assert.equal(normalizeHandle("https://x.com/OpenAI/status/123"), null);
+  assert.equal(normalizeHandle("https://example.com/OpenAI"), null);
   assert.equal(normalizeHandle("not-valid!"), null);
   assert.equal(normalizeHandle("abcdefghijklmnop"), null);
 });

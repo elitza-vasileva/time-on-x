@@ -94,8 +94,26 @@ export function aggregateLeaderboard(profiles, dailyTotals, period, currentPubli
 }
 
 export function normalizeHandle(value) {
-  const handle = String(value || "").trim().replace(/^@+/, "");
+  let handle = String(value || "").trim();
+  if (!handle) return null;
+
+  const looksLikeProfileUrl = /^(?:https?:\/\/)?(?:www\.|mobile\.)?(?:x|twitter)\.com\//i.test(handle);
+  if (looksLikeProfileUrl) {
+    try {
+      const parsed = new URL(/^https?:\/\//i.test(handle) ? handle : `https://${handle}`);
+      const hostname = parsed.hostname.toLowerCase();
+      const allowedHosts = new Set(["x.com", "www.x.com", "mobile.x.com", "twitter.com", "www.twitter.com", "mobile.twitter.com"]);
+      const segments = parsed.pathname.split("/").filter(Boolean);
+      if (!allowedHosts.has(hostname) || segments.length !== 1) return null;
+      handle = decodeURIComponent(segments[0]);
+    } catch {
+      return null;
+    }
+  }
+
+  handle = handle.replace(/^@+/, "");
   if (!/^[A-Za-z0-9_]{1,15}$/.test(handle)) return null;
+  if (new Set(["compose", "explore", "home", "i", "intent", "login", "messages", "notifications", "search", "settings", "share", "signup"]).has(handle.toLowerCase())) return null;
   return handle;
 }
 

@@ -11,10 +11,18 @@ const elements = Object.fromEntries([
 let periodType = "daily";
 let unsubscribe = () => {};
 
-function initials(handle) {
+function avatarFor(item) {
+  if (/^https:\/\/pbs\.twimg\.com\//i.test(item.avatarUrl || "")) {
+    const image = document.createElement("img");
+    image.className = "initial-avatar";
+    image.src = item.avatarUrl;
+    image.alt = "";
+    image.referrerPolicy = "no-referrer";
+    return image;
+  }
   const avatar = document.createElement("span");
   avatar.className = "initial-avatar";
-  avatar.textContent = String(handle || "?").slice(0, 1).toUpperCase();
+  avatar.textContent = String(item.handle || "?").slice(0, 1).toUpperCase();
   return avatar;
 }
 
@@ -59,8 +67,8 @@ function render(result) {
     row.href = `https://x.com/${encodeURIComponent(item.handle)}`;
     row.target = "_blank"; row.rel = "noopener noreferrer";
     const rank = document.createElement("span"); rank.className = "ranking-rank"; rank.textContent = `#${item.rank}`;
-    const person = document.createElement("span"); person.className = "ranking-person"; person.append(initials(item.handle));
-    const copy = document.createElement("div"); const name = document.createElement("strong"); name.textContent = `@${item.handle}`; const badge = document.createElement("span"); badge.className = "unverified-chip"; badge.textContent = "UNVERIFIED"; name.append(badge); const note = document.createElement("small"); note.textContent = "Self-declared profile"; copy.append(name, note); person.append(copy);
+    const person = document.createElement("span"); person.className = "ranking-person"; person.append(avatarFor(item));
+    const copy = document.createElement("div"); const name = document.createElement("strong"); name.textContent = item.displayName || `@${item.handle}`; const badge = document.createElement("span"); badge.className = "unverified-chip"; badge.textContent = item.xUserId ? "PROFILE FOUND" : "UNVERIFIED"; name.append(badge); const note = document.createElement("small"); note.textContent = `@${item.handle} · self-declared`; copy.append(name, note); person.append(copy);
     const duration = document.createElement("strong"); duration.className = "ranking-duration"; duration.textContent = formatCompactDuration(item.durationMs);
     row.append(rank, person, duration); elements.rankingList.append(row);
   });

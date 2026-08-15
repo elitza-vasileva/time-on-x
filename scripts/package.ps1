@@ -2,8 +2,10 @@ $ErrorActionPreference = "Stop"
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $distDirectory = Join-Path $projectRoot "dist"
-$stagingDirectory = Join-Path $distDirectory "package-v1.5.3"
-$zipPath = Join-Path $distDirectory "time-on-x-extension-v1.5.3.zip"
+$manifest = Get-Content -Raw -LiteralPath (Join-Path $projectRoot "manifest.json") | ConvertFrom-Json
+$version = $manifest.version
+$stagingDirectory = Join-Path $distDirectory "package-v$version"
+$zipPath = Join-Path $distDirectory "time-on-x-extension-v$version.zip"
 $resolvedRoot = [System.IO.Path]::GetFullPath($projectRoot)
 $resolvedDist = [System.IO.Path]::GetFullPath($distDirectory)
 $resolvedStaging = [System.IO.Path]::GetFullPath($stagingDirectory)

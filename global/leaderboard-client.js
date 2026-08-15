@@ -48,17 +48,20 @@ export async function getProfileForOwner(ownerId) {
 
 export async function lookupXProfile(rawHandle) {
   const handle = normalizeHandle(rawHandle);
-  if (!handle) throw new Error("Enter a valid X handle with up to 15 letters, numbers, or underscores.");
+  if (!handle) throw new Error("Enter a valid X handle or profile link.");
   if (!PROFILE_LOOKUP_URL) {
     return { handle, displayName: handle, avatarUrl: "", xUserId: "", profileFetched: false };
   }
-  const response = await fetch(PROFILE_LOOKUP_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ handle }),
-  });
+  const requestUrl = new URL(PROFILE_LOOKUP_URL);
+  requestUrl.searchParams.set("handle", handle);
+  const response = await fetch(requestUrl);
   const result = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(result.error || "That X profile could not be loaded.");
+  if (!response.ok) {
+    if (response.status === 404 || response.status === 400) {
+      throw new Error(result.error || "That X profile could not be found.");
+    }
+    return { handle, displayName: handle, avatarUrl: "", xUserId: "", profileFetched: false };
+  }
   return {
     handle: normalizeHandle(result.handle) || handle,
     displayName: String(result.displayName || result.handle || handle).slice(0, 80),

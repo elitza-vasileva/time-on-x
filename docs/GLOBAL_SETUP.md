@@ -20,28 +20,18 @@ npx instant-cli@latest push perms --app 98a6542b-b4c9-4a76-81b0-d4bc03e95de7
 3. Keep email magic-code authentication enabled in InstantDB Auth. Create a fixed test email/code for Chrome Web Store review.
 4. Run `npm test` and `npm run package`.
 
-## Optional ScrapeCreators profile enrichment
+## ScrapeCreators profile enrichment
 
-The extension must never contain the ScrapeCreators API key. Deploy the included Cloudflare Worker and store the key as its secret:
+The extension never contains the ScrapeCreators API key. Profile requests go through the Vercel Function at `https://timeonx.com/api/profile`.
 
-1. Copy `server/wrangler.toml.example` to `server/wrangler.toml`.
-2. Set `ALLOWED_ORIGINS` to the exact installed extension origin, such as `chrome-extension://EXTENSION_ID`. Add `http://127.0.0.1:8765` only during local testing.
-3. From the `server` directory, authenticate to Cloudflare and add the secret:
+1. In the Time on X Vercel project, open **Settings → Environment Variables**.
+2. Add `SCRAPECREATORS_API_KEY` with the secret from ScrapeCreators.
+3. Add `PROFILE_ALLOWED_ORIGINS` with the exact installed extension origin, such as `chrome-extension://EXTENSION_ID`. Multiple exact origins may be comma-separated during testing.
+4. Apply both variables to Production and redeploy.
 
-```powershell
-npx wrangler login
-npx wrangler secret put SCRAPECREATORS_API_KEY
-npx wrangler deploy
-```
+The endpoint sends only the normalized handle to ScrapeCreators, returns public name/avatar/account ID, and asks ScrapeCreators to reuse profile data cached within seven days so repeated lookups can cost zero credits. If the service is unavailable, joining falls back to the typed handle and an initial avatar.
 
-4. Configure the deployed `/profile` URL and rebuild:
-
-```powershell
-npm run configure:profile -- https://YOUR-WORKER.workers.dev/profile
-npm run package
-```
-
-The Worker sends only the entered handle to ScrapeCreators, returns name/avatar/account ID, restricts browser origins, and caches successful profiles for 24 hours to reduce credit usage. If the service is unavailable, joining still falls back to the typed handle and an initial avatar.
+The older Cloudflare Worker in `server/profile-worker.js` remains available as an alternative deployment target.
 
 ## Published data and ranking behavior
 

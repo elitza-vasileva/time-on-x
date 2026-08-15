@@ -1,6 +1,6 @@
 {
   "name": "time-on-x-extension",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "description": "A privacy-first Chrome extension for tracking active time on X.",
